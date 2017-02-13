@@ -15,7 +15,9 @@ public class Letter {
 	private Letter(char lettre) {
 		this.lettre = lettre;
 	}
-	
+	public static Object GetChar(char lettre){
+		return lettre;
+	}
 	public static Letter valueOf(char lettre) {
 		return cache.computeIfAbsent(lettre, input-> Letter.valueOf(input));
 	}
