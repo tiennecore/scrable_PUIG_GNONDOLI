@@ -4,76 +4,105 @@ package fr.esiea.puig.gnondoli.Joueurs;
 import fr.esiea.puig.gnondoli.Plateau.IActionPlayer;
 import fr.esiea.puig.gnondoli.Plateau.LettresPlateau;
 import fr.esiea.puig.gnondoli.PotCommun.Bag;
+import fr.esiea.puig.gnondoli.Words.IWord;
+import fr.esiea.puig.gnondoli.Words.Word;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import fr.esiea.puig.gnondoli.Letters.Letter;
 
-public class Player implements IActionPlayer{
+public class Player implements IActionPlayer,IWord{
 	
-	Bag LettresPlayer= new Bag();
-	List<Letter> MesLettres=new ArrayList<Letter>();
+	private Bag LettresPlayer;
+	private List<Word> MesMots;
 	
-	
-	public void SupprimerMesLettres(){
-		int i=MesLettres.size()-1;
-		do{
-			MesLettres.remove(i);
-			i--;			
-		}while(i>=0);
-	}	
-	
-	
-	public LettresPlateau Piocher(){
-		LettresPlateau.CommunPot.add(LettresPlayer.getNextLetter());
-		return null;	
+	public Player(Bag LettresPlayer,List<Word> MesMots){
+		this.LettresPlayer= new Bag();
+		this.MesMots=new ArrayList<Word>();
+	}
+	public int getSizeMesMots() {
+		return MesMots.size()-1;
+	}
+	public void Piocher(){
+		LettresPlayer.getNextLetter();
 	}
 
-
+	
 	@Override
-	public boolean TrouverLettre(Letter c) {
-		Letter existence= LettresPlateau.CommunPot
+	public boolean TrouverLettre(char c) {
+		char existence= LettresPlateau.CommunPot
         .stream()
-        .filter(x -> c.equals(x))
+        .filter(x -> c==x)
         .findAny()
         .orElse(null);
 		
-		if (existence == null)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-		// TODO Auto-generated method stub
+		return existence == c;			
+	}
+
+
+	@Override
+	public void SelectionnerLettre(char c,int NumberWordUsed) {
+		
+		int i=LettresPlateau.CommunPot.size()-1;
+		Word WordUsed= MesMots.get(NumberWordUsed);
+		do{
+			if (c==(LettresPlateau.CommunPot.get(i))){
+				((Word) MesMots).AddLetterToWord(c,WordUsed);
+			}
+			i--;			
+		}while(i>=0);
 		
 	}
 
 
 	@Override
-	public LettresPlateau SelectionnerLettre(Letter c) {
-		LettresPlateau.CommunPot
-        .stream()
-        .collect(Collectors.toCollection(() ->  MesLettres));
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public LettresPlateau SupprimerLettre(Letter c) {
+	public void SupprimerLettre(char c) {
 		int i=LettresPlateau.CommunPot.size()-1;
 		do{
-			if (c.equals(LettresPlateau.CommunPot.get(i))){
+			if (c==(LettresPlateau.CommunPot.get(i))){
 				LettresPlateau.CommunPot.remove(i);
 			}
 			i--;			
 		}while(i>=0);
+	}
+
+
+	@Override
+	public void AddLetterToWord(char letter,Word WordUsed) {
+		WordUsed.setWordPlayer(WordUsed.getWordPlayer() + letter);
+	}
+
+
+	@Override
+	public int ActualWord() {
+		int i=0;
+		do{
+			i++;
+		}
+		while(!MesMots.get(i).equals(null) || !MesMots.get(i).equals("") || i<=getSizeMesMots());
+		return i;
+	}
+
+
+	@Override
+	public void DeleteWord() {
 		// TODO Auto-generated method stub
-		return null;
+		
+	}
+
+
+	@Override
+	public void DeleteWordPlayer(int PlaceWord) {
+		Word ThisWord=MesMots.get(PlaceWord);
+		ThisWord.DeleteWord();
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void ActionPlayer() {
+		
+		
 	}
 
 

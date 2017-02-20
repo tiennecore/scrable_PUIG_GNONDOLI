@@ -1,15 +1,14 @@
 package fr.esiea.puig.gnondoli.Plateau;
 
-import fr.esiea.puig.gnondoli.Letters.Letter;
 
 public interface IActionPlayer {
 	
-	boolean TrouverLettre(Letter c);
+	boolean TrouverLettre(char c);
 	
-	LettresPlateau SelectionnerLettre(Letter c);
+	void SelectionnerLettre(char c,int NumberWordUsed);
 	
-	LettresPlateau SupprimerLettre(Letter c);
+	void SupprimerLettre(char c);
 	
-	LettresPlateau Piocher();
+	void Piocher();
 
 }
