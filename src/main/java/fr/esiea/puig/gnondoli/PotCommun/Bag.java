@@ -5,13 +5,15 @@ import fr.esiea.puig.gnondoli.Plateau.LettresPlateau;
 
 public class Bag implements ILetterBag{
 
-	private Random random = new Random();
+	private LettresPlateau plateau;
 	
-	@Override
-	public void getNextLetter() {
-		char lettre=(char)('a' + random.nextInt(26));
-		
-		LettresPlateau.CommunPot.add(lettre);
+	public Bag(LettresPlateau pot){
+		this.plateau=pot;
 	}
-
+	@Override
+	public void getNextLetter(int valrand) {
+		char lettre=(char)('a' + valrand );
+		plateau.getCommunPot().add(lettre);
+	}
+	
 }

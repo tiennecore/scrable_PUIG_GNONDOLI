@@ -9,28 +9,31 @@ import fr.esiea.puig.gnondoli.Words.Word;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class Player implements IActionPlayer,IWord{
 	
 	private Bag LettresPlayer;
+	private LettresPlateau plateau;
 	private List<Word> MesMots;
 	
-	public Player(Bag LettresPlayer,List<Word> MesMots){
-		this.LettresPlayer= new Bag();
+	public Player(LettresPlateau pot){
+		this.LettresPlayer= new Bag(pot);
 		this.MesMots=new ArrayList<Word>();
+		this.plateau = pot;
 	}
 	public int getSizeMesMots() {
 		return MesMots.size()-1;
 	}
 	public void Piocher(){
-		LettresPlayer.getNextLetter();
+		LettresPlayer.getNextLetter(getRandomPlayer());
 	}
 
 	
 	@Override
 	public boolean TrouverLettre(char c) {
-		char existence= LettresPlateau.CommunPot
+		char existence= plateau.getCommunPot()
         .stream()
         .filter(x -> c==x)
         .findAny()
@@ -43,10 +46,10 @@ public class Player implements IActionPlayer,IWord{
 	@Override
 	public void SelectionnerLettre(char c,int NumberWordUsed) {
 		
-		int i=LettresPlateau.CommunPot.size()-1;
+		int i=plateau.getCommunPot().size()-1;
 		Word WordUsed= MesMots.get(NumberWordUsed);
 		do{
-			if (c==(LettresPlateau.CommunPot.get(i))){
+			if (c==(plateau.getCommunPot().get(i))){
 				((Word) MesMots).AddLetterToWord(c,WordUsed);
 			}
 			i--;			
@@ -57,10 +60,10 @@ public class Player implements IActionPlayer,IWord{
 
 	@Override
 	public void SupprimerLettre(char c) {
-		int i=LettresPlateau.CommunPot.size()-1;
+		int i=plateau.getCommunPot().size()-1;
 		do{
-			if (c==(LettresPlateau.CommunPot.get(i))){
-				LettresPlateau.CommunPot.remove(i);
+			if (c==(plateau.getCommunPot().get(i))){
+				plateau.getCommunPot().remove(i);
 			}
 			i--;			
 		}while(i>=0);
@@ -103,6 +106,11 @@ public class Player implements IActionPlayer,IWord{
 	public void ActionPlayer() {
 		
 		
+	}
+	@Override
+	public int getRandomPlayer() {
+		Random random = new Random();
+		return random.nextInt(25);
 	}
 
 

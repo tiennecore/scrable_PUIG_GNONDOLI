@@ -10,5 +10,7 @@ public interface IActionPlayer {
 	void SupprimerLettre(char c);
 	
 	void Piocher();
+	
+	int getRandomPlayer();
 
 }

@@ -11,10 +11,18 @@ import fr.esiea.puig.gnondoli.PotCommun.Bag;
 public class LettresPlateau{
 	
 	
-	public static List<Character> CommunPot = new ArrayList<Character>();
+	private List<Character> CommunPot ;
 	
-	private LettresPlateau(List<Character> CommunPot) {
-		LettresPlateau.CommunPot = CommunPot;
+	public LettresPlateau() {
+		this.CommunPot=(new ArrayList<Character>());
+	}
+
+	public List<Character> getCommunPot() {
+		return CommunPot;
+	}
+
+	public void setCommunPot(List<Character> communPot) {
+		CommunPot = communPot;
 	}
 
 	
