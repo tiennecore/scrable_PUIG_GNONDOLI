@@ -21,7 +21,7 @@ public class Player implements IActionPlayer,IWord{
 	public Player(LettresPlateau pot){
 		this.LettresPlayer= new Bag(pot);
 		this.MesMots=new ArrayList<Word>();
-		this.plateau = pot;
+		this.setPlateau(pot);
 	}
 	public int getSizeMesMots() {
 		return MesMots.size()-1;
@@ -33,7 +33,7 @@ public class Player implements IActionPlayer,IWord{
 	
 	@Override
 	public boolean TrouverLettre(char c) {
-		char existence= plateau.getCommunPot()
+		char existence= getPlateau().getCommunPot()
         .stream()
         .filter(x -> c==x)
         .findAny()
@@ -46,10 +46,10 @@ public class Player implements IActionPlayer,IWord{
 	@Override
 	public void SelectionnerLettre(char c,int NumberWordUsed) {
 		
-		int i=plateau.getCommunPot().size()-1;
+		int i=getPlateau().getCommunPot().size()-1;
 		Word WordUsed= MesMots.get(NumberWordUsed);
 		do{
-			if (c==(plateau.getCommunPot().get(i))){
+			if (c==(getPlateau().getCommunPot().get(i))){
 				((Word) MesMots).AddLetterToWord(c,WordUsed);
 			}
 			i--;			
@@ -60,10 +60,10 @@ public class Player implements IActionPlayer,IWord{
 
 	@Override
 	public void SupprimerLettre(char c) {
-		int i=plateau.getCommunPot().size()-1;
+		int i=getPlateau().getCommunPot().size()-1;
 		do{
-			if (c==(plateau.getCommunPot().get(i))){
-				plateau.getCommunPot().remove(i);
+			if (c==(getPlateau().getCommunPot().get(i))){
+				getPlateau().getCommunPot().remove(i);
 			}
 			i--;			
 		}while(i>=0);
@@ -111,6 +111,12 @@ public class Player implements IActionPlayer,IWord{
 	public int getRandomPlayer() {
 		Random random = new Random();
 		return random.nextInt(25);
+	}
+	public LettresPlateau getPlateau() {
+		return plateau;
+	}
+	public void setPlateau(LettresPlateau plateau) {
+		this.plateau = plateau;
 	}
 
 
