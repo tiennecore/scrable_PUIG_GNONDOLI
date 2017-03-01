@@ -9,21 +9,22 @@ import fr.esiea.puig.gnondoli.Plateau.LettresPlateau;
 
 
 public class TestPiocher {
-	Player playertest= new Player();
-	
+	private LettresPlateau pot ;
+	private Player playertest;
+	public TestPiocher(){
+		this.pot= new LettresPlateau();
+		this.playertest= new Player(pot);
+		
+		
+	}
 	
 	@Test
 	public void TestExistElement(){
 		playertest.Piocher();
 		playertest.Piocher();
-		char testlettre =playertest.MesLettres.get(0);
-		char existence= playertest.MesLettres
-		        .stream()
-		        .filter(x -> testlettre==x)
-		        .findAny()
-		        .orElse(null);
-		assertTrue("un élément exist ", existence==testlettre);
-		assertFalse("un élément don't found ", existence==' ');
+		
+		assertTrue("un element exist ", playertest.TrouverLettre(playertest.getPlateau().getCommunPot().get(0))==true);
+		assertFalse("element not found ", playertest.TrouverLettre(playertest.getPlateau().getCommunPot().get(0))==false);
 		
 	}
 
